@@ -28,6 +28,12 @@ return [
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
+        ],
+        'globalVars'=>[
+            'head'=>[
+                'siteTitle'=>'Web ban hang',
+                'projectName'=>'Web ban hang'
+            ]
         ]
     ],
 ];
