@@ -16,7 +16,8 @@ use Slim\Http\Response;
 class AdminProducts extends Base {
 	public function index( Request $request, Response $response ) {
 		$this->view->render( $response, 'admin/product-list.phtml', [
-			'products' => Product::all()
+			'products' => Product::all(),
+			'messages' => $this->flash->getMessage( 'product' )
 		] );
 	}
 
@@ -28,12 +29,19 @@ class AdminProducts extends Base {
 			$product = Product::find( $id );
 		}
 		$this->view->render( $response, 'admin/product-add.phtml', [
-			'product' => $product,
-			'mode'    => $id === 'add' ? 'add' : 'edit'
+			'product'  => $product,
+			'mode'     => $id === 'add' ? 'add' : 'edit'
 		] );
 	}
 
 	public function save( Request $request, Response $response, $args ) {
+		if ( ! isset( $args['id'] ) ) {
+			// create new product
+			$product = new Product( $request->getParsedBody() );
+			$product->save();
+			$this->flash->addMessage( 'product', "Sản phẩm <strong>$product->name</strong> đã được tạo thành công" );
 
+			return $response->withRedirect( '/admin/products', 302 );
+		}
 	}
 }

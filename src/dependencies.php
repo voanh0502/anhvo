@@ -27,3 +27,7 @@ $capsule->bootEloquent();
 $container['db'] = function( $container ) use ($capsule) {
 	return $capsule;
 };
+
+$container['flash'] = function () {
+	return new \Slim\Flash\Messages();
+};

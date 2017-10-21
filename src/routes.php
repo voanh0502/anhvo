@@ -16,4 +16,5 @@ $app->get( '/[{name}]', function( Request $request, Response $response, array $a
 $app->group( '/admin', function() {
 	$this->get( '/products', \Controllers\AdminProducts::class . ':index' );
 	$this->get( '/products/{id}', \Controllers\AdminProducts::class . ':edit' );
+	$this->post( '/products[/{id}]', \Controllers\AdminProducts::class . ':save' );
 } );

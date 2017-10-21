@@ -12,5 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 
 
 class Product extends Model {
-
+	protected $fillable   = [ 'name', 'price', 'saleprice', 'description', 'features' ];
+	public    $timestamps = false;
 }
