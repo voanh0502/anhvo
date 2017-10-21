@@ -16,6 +16,6 @@ class Base {
 
 	public function __construct( ContainerInterface $container ) {
 		$this->container = $container;
-		$this->view = $container->get('view');
+		$this->view = $container->get('renderer');
 	}
 }

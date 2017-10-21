@@ -9,6 +9,11 @@
 namespace Controllers;
 
 
-class AdminProducts {
+use Slim\Http\Request;
+use Slim\Http\Response;
 
+class AdminProducts extends Base {
+	public function index( Request $request, Response $response ) {
+		$this->view->render( $response, 'admin/product-list.phtml' );
+	}
 }

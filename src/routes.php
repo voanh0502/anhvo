@@ -12,3 +12,7 @@ $app->get( '/[{name}]', function( Request $request, Response $response, array $a
 	// Render index view
 	return $this->renderer->render( $response, 'index.phtml', $args );
 } );
+
+$app->group( '/admin', function() {
+	$this->get( '/products', \Controllers\AdminProducts::class . ':index' );
+} );
