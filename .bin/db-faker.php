@@ -87,5 +87,5 @@ function run($model_class, $faker, $fields = [], $count)
     }
 }
 
-run(\Models\Category::class, Category::class, ['name', 'description'], 5);
-run(\Models\Product::class, Category::class, ['name', 'category_id', 'price', 'saleprice', 'description', 'features', 'stock', 'sku', 'image'], 50);
+run(\Models\Category::class, Category::class, ['name', 'description','image'], 5);
+//run(\Models\Product::class, Category::class, ['name', 'category_id', 'price', 'saleprice', 'description', 'features', 'stock', 'sku', 'image'], 50);

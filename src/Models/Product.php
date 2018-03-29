@@ -20,4 +20,10 @@ class Product extends Model
     {
         return $this->belongsTo('\Models\Category');
     }
+
+    public function getSalePercentageAttribute()
+    {
+        if ($this->saleprice === null) return 0;
+        return (($this->price - $this->saleprice) * 1.0) / $this->price;
+    }
 }
