@@ -5,8 +5,8 @@
         </h1>
     </div>
 <?php ?>
-<?php if ($messages) foreach ( $messages as $message ) { ?>
-    <div class="alert alert-success" role="alert"><?=$message?></div>
+<?php if ($messages) foreach ($messages as $message) { ?>
+    <div class="alert alert-success" role="alert"><?= $message ?></div>
 <?php } ?>
     <div class="table-responsive">
         <table class="table table-striped">
@@ -14,15 +14,17 @@
             <tr>
                 <th>#</th>
                 <th>Tên sản phẩm</th>
+                <th>Giá sản phẩm</th>
             </tr>
             </thead>
             <tbody>
-			<?php foreach ( $products as $product ) { ?>
+            <?php foreach ($products as $product) { ?>
                 <tr>
-                    <th scope="row"><?=$product->ID?></th>
-                    <td><?=$product->name?></td>
+                    <th scope="row"><?= $product->id ?></th>
+                    <td><strong><a href="/admin/products/<?= $product->id ?>"><?= $product->name ?></a></strong></td>
+                    <td><?= $product->price ?></td>
                 </tr>
-			<?php } ?>
+            <?php } ?>
             </tbody>
         </table>
     </div>

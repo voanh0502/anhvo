@@ -8,7 +8,7 @@
             height: 200px;
         }
     </style>
-    <form method="post" action="/admin/products<?=$mode === 'add' ? '' : ('/' . $product->ID)?>">
+    <form method="post" action="/admin/products<?=$mode === 'add' ? '' : ('/' . $product->id)?>">
         <div class="clearfix">
             <h1>Thêm sản phẩm mới
                 <a href="/admin/products/add">
@@ -21,7 +21,7 @@
             <label for="name" class="col-sm-2 col-form-label col-form-label-lg">Tên sản phẩm</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control form-control-lg" id="name" name="name"
-                       placeholder="Tên sản phẩm">
+                       placeholder="Tên sản phẩm" value="<?=$product->name?>">
             </div>
         </div>
         <div class="form-group row">
@@ -30,13 +30,13 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="price" placeholder="Giá chính thức">
+                            <input type="text" class="form-control" name="price" placeholder="Giá chính thức" value="<?=$product->price?>">
                             <div class="input-group-addon">₫</div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="saleprice" placeholder="Giá khuyến mãi">
+                            <input type="text" class="form-control" name="saleprice" placeholder="Giá khuyến mãi" value="<?=$product->saleprice?>">
                             <div class="input-group-addon">₫</div>
                         </div>
                     </div>
@@ -46,13 +46,13 @@
         <div class="form-group row description-group">
             <label for="" class="col-sm-2 col-form-label">Mô tả</label>
             <div class="col-sm-10">
-                <textarea name="description" class="ck-area"></textarea>
+                <textarea name="description" class="ck-area"><?=$product->description?></textarea>
             </div>
         </div>
         <div class="form-group row features-group">
             <label for="" class="col-sm-2 col-form-label">Tính năng</label>
             <div class="col-sm-10">
-                <textarea name="features" class="ck-area"></textarea>
+                <textarea name="features" class="ck-area"><?=$product->features?></textarea>
             </div>
         </div>
     </form>
