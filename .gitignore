@@ -2,3 +2,5 @@
 /logs/*
 !/logs/README.md
 .env
+/package*
+/node_modules/

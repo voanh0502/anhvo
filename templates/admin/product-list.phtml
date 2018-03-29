@@ -1,6 +1,9 @@
-<?php include "layout/admin-header.phtml" ?>
-    <div class="clearfix">
+<?php
+
+include "layout/admin-header.phtml" ?>
+    <div class="clearfix admin-header">
         <h1>Danh sách sản phẩm
+            <span class="badge badge-secondary"><?= $site['productCount'] ?></span>
             <a href="/admin/products/add" class="btn btn-primary" role="button">Thêm sản phẩm</a>
         </h1>
     </div>
@@ -22,7 +25,7 @@
                 <tr>
                     <th scope="row"><?= $product->id ?></th>
                     <td><strong><a href="/admin/products/<?= $product->id ?>"><?= $product->name ?></a></strong></td>
-                    <td><?= $product->price ?></td>
+                    <td><?= $product->price ?> VND</td>
                 </tr>
             <?php } ?>
             </tbody>
