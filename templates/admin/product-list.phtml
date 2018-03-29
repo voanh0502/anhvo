@@ -18,6 +18,7 @@ include "layout/admin-header.phtml" ?>
                 <th>#</th>
                 <th>Tên sản phẩm</th>
                 <th>Giá sản phẩm</th>
+                <th>Nhóm</th>
             </tr>
             </thead>
             <tbody>
@@ -25,7 +26,16 @@ include "layout/admin-header.phtml" ?>
                 <tr>
                     <th scope="row"><?= $product->id ?></th>
                     <td><strong><a href="/admin/products/<?= $product->id ?>"><?= $product->name ?></a></strong></td>
-                    <td><?= $product->price ?> VND</td>
+                    <td>
+                        <?php if ($product->saleprice !== null) { ?>
+                            <del><?= $product->price ?> VND</del>
+                            <br>
+                            <u><?= $product->saleprice ?> VND</u>
+                        <?php } else { ?>
+                            <?= $product->price ?> VND
+                        <?php } ?>
+                    </td>
+                    <td><?= $product->category->name ?></td>
                 </tr>
             <?php } ?>
             </tbody>

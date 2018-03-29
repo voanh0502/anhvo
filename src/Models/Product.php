@@ -9,13 +9,15 @@
 namespace Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination;
-
-use Illuminate\Pagination\Paginator;
 
 
 class Product extends Model
 {
     protected $fillable = ['name', 'price', 'saleprice', 'description', 'features'];
     public $timestamps = false;
+
+    public function category()
+    {
+        return $this->belongsTo('\Models\Category');
+    }
 }

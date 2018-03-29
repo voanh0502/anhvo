@@ -16,6 +16,8 @@ require __DIR__ . '/../src/dependencies.php';
 
 class Category extends \Faker\Provider\Base
 {
+    private $_price;
+
     public function description()
     {
         return $this->generator->sentence(10);
@@ -34,12 +36,16 @@ class Category extends \Faker\Provider\Base
 
     public function price()
     {
-        return $this->generator->numberBetween(100, 2000)*1000;
+        $this->_price = $this->generator->numberBetween(100, 2000) * 1000;
+        return $this->_price;
     }
 
     public function saleprice()
     {
-        return $this->generator->numberBetween(100, 2000)*1000;
+        $val = $this->generator->optional($weight = 0.3)->numberBetween(100, $this->_price / 1000);
+        if ($val !== null)
+            return $val * 1000;
+        return $val;
     }
 }
 
@@ -63,4 +69,4 @@ function run($model_class, $faker, $fields = [], $count)
 }
 
 run(\Models\Category::class, Category::class, ['name', 'description'], 5);
-run(\Models\Product::class, Category::class, ['name', 'category_id', 'price', 'saleprice', 'description', 'features'], 40);
+run(\Models\Product::class, Category::class, ['name', 'category_id', 'price', 'saleprice', 'description', 'features'], 50);
