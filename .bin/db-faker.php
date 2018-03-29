@@ -47,6 +47,16 @@ class Category extends \Faker\Provider\Base
             return $val * 1000;
         return $val;
     }
+
+    public function stock()
+    {
+        return $this->generator->numberBetween(1, 100);
+    }
+
+    public function sku()
+    {
+        return $this->generator->regexify('[A-Z]{3}[0-9]{5}');
+    }
 }
 
 function run($model_class, $faker, $fields = [], $count)
@@ -69,4 +79,4 @@ function run($model_class, $faker, $fields = [], $count)
 }
 
 run(\Models\Category::class, Category::class, ['name', 'description'], 5);
-run(\Models\Product::class, Category::class, ['name', 'category_id', 'price', 'saleprice', 'description', 'features'], 50);
+run(\Models\Product::class, Category::class, ['name', 'category_id', 'price', 'saleprice', 'description', 'features', 'stock', 'sku'], 50);
