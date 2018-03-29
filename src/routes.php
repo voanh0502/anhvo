@@ -5,16 +5,17 @@ use Slim\Http\Response;
 
 // Routes
 
-$app->get( '/[{name}]', function( Request $request, Response $response, array $args ) {
-	// Sample log message
-	$this->logger->info( "Slim-Skeleton '/' route" );
+$app->get('/', function (Request $request, Response $response, array $args) {
+    // Render index view
+    return $this->renderer->render($response, 'index.phtml', array_merge($args, [
+        'body_classes' => ['page-index']
+    ]));
+});
 
-	// Render index view
-	return $this->renderer->render( $response, 'index.phtml', $args );
-} );
+$app->group('/admin', function () {
+    $this->post('/upload', \Controllers\AdminProducts::class . ':upload');
 
-$app->group( '/admin', function() {
-	$this->get( '/products', \Controllers\AdminProducts::class . ':index' );
-	$this->get( '/products/{id}', \Controllers\AdminProducts::class . ':edit' );
-	$this->post( '/products[/{id}]', \Controllers\AdminProducts::class . ':save' );
-} );
+    $this->get('/products', \Controllers\AdminProducts::class . ':index');
+    $this->get('/products/{id}', \Controllers\AdminProducts::class . ':edit');
+    $this->post('/products[/{id}]', \Controllers\AdminProducts::class . ':save');
+});

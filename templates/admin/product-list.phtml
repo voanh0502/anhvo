@@ -1,6 +1,11 @@
 <?php
 
 include "layout/admin-header.phtml" ?>
+    <style>
+        .table-responsive td .media img{
+            width: 60px;
+        }
+    </style>
     <div class="clearfix admin-header">
         <h1>Danh sách sản phẩm
             <span class="badge badge-secondary"><?= $site['productCount'] ?></span>
@@ -26,7 +31,14 @@ include "layout/admin-header.phtml" ?>
             <?php foreach ($products as $product) { ?>
                 <tr>
                     <th scope="row"><?= $product->id ?></th>
-                    <td><strong><a href="/admin/products/<?= $product->id ?>"><?= $product->name ?></a></strong></td>
+                    <td>
+                        <div class="media">
+                            <img src="<?= $product->image ?>" alt="" class="border mr-3">
+                            <div class="media-body">
+                                <strong><a href="/admin/products/<?= $product->id ?>"><?= $product->name ?></a></strong>
+                            </div>
+                        </div>
+                    </td>
                     <td>
                         <?php if ($product->saleprice !== null) { ?>
                             <del class="text-muted"><?= $product->price ?> VND</del>

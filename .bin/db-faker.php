@@ -20,12 +20,12 @@ class Category extends \Faker\Provider\Base
 
     public function description()
     {
-        return $this->generator->sentence(10);
+        return $this->generator->sentence(30);
     }
 
     public function features()
     {
-        return $this->generator->paragraph(4);
+        return $this->generator->paragraph(6);
     }
 
     public function category_id()
@@ -68,15 +68,24 @@ function run($model_class, $faker, $fields = [], $count)
     $db->statement("SET foreign_key_checks=1");
     $generator = \Faker\Factory::create();
     $generator->addProvider(new $faker($generator));
+    $generator->addProvider(new \Faker\Provider\Image($generator));
 
     for ($i = 0; $i < $count; $i++) {
         $model = new $model_class();
         foreach ($fields as $field) {
-            $model->$field = $generator->$field;
+            switch ($field) {
+                case 'image':
+                    $img = $generator->image(__DIR__ . '/../public/uploads', 600, 600);
+                    $model->$field = preg_replace('/.*?\/public\/uploads/i', '/uploads', $img);
+                    break;
+                default:
+                    $model->$field = $generator->$field;
+            }
+
         }
         $model->save();
     }
 }
 
 run(\Models\Category::class, Category::class, ['name', 'description'], 5);
-run(\Models\Product::class, Category::class, ['name', 'category_id', 'price', 'saleprice', 'description', 'features', 'stock', 'sku'], 50);
+run(\Models\Product::class, Category::class, ['name', 'category_id', 'price', 'saleprice', 'description', 'features', 'stock', 'sku', 'image'], 50);

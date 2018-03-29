@@ -10,7 +10,8 @@
     </style>
     <form method="post" action="/admin/products<?= $mode === 'add' ? '' : ('/' . $product->id) ?>">
         <div class="clearfix admin-header">
-            <h1>Thêm sản phẩm mới
+            <h1><?php if ($mode === 'add') { ?>Thêm sản phẩm mới<?php } else { ?>Cập nhật "<?= $product->name ?>"<?php
+                } ?>
                 <a href="/admin/products/add">
                     <button type="submit" class="btn btn-primary">Lưu lại</button>
                 </a>
@@ -77,16 +78,31 @@
                         </dl>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-header">Quản lý kho hàng</div>
                     <div class="card-body">
                         <div class="form-group">
                             <label for="">SKU</label>
-                            <input type="text" class="form-control" name="sku" value="<?= $product->sku ?>" placeholder="SKU">
+                            <input type="text" class="form-control" name="sku" value="<?= $product->sku ?>"
+                                   placeholder="SKU">
                         </div>
                         <div class="form-group">
                             <label for="">Số lượng hàng trong kho</label>
-                            <input type="text" class="form-control" name="sku" value="<?= $product->stock ?>" placeholder="Số lượng hàng trong kho">
+                            <input type="text" class="form-control" name="sku" value="<?= $product->stock ?>"
+                                   placeholder="Số lượng hàng trong kho">
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Ảnh sản phẩm</div>
+                    <div class="card-body">
+                        <div class="w-75 mx-auto mb-3">
+                            <img src="<?= $product->image ?>" alt="" class="img-fluid border rounded">
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile01" name="image"
+                                   value="<?= $product->image ?>">
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                         </div>
                     </div>
                 </div>

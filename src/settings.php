@@ -33,8 +33,8 @@ return [
         ],
         'globalVars' => [
             'head' => [
-                'siteTitle' => 'Web ban hang',
-                'projectName' => 'Web ban hang'
+                'siteTitle' => 'Web bán hàng',
+                'projectName' => 'Web bán hàng'
             ]
         ]
     ],
