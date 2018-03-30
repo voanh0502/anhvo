@@ -1,14 +1,8 @@
 <?php
 
-/**
- * @param $field
- * @param $label
- * @return string
- */
-function sortable_html($field, $label)
+function sortable_html($field, $label, $sort)
 {
-    global $sort;
-    $link = url('/admin/products/?');
+    $link = url('/admin/products?');
     $class = [];
 
     $link .= 'sort=' . $field . ',';
@@ -50,9 +44,9 @@ include "layout/admin-header.phtml" ?>
             <thead>
             <tr>
                 <th>#</th>
-                <th><?= sortable_html('name', 'Tên sản phẩm') ?></th>
-                <th><?= sortable_html('price', 'Giá sản phẩm') ?></th>
-                <th><?= sortable_html('stock', 'Kho hàng') ?></th>
+                <th><?= sortable_html('name', 'Tên sản phẩm', $sort) ?></th>
+                <th><?= sortable_html('price', 'Giá sản phẩm', $sort) ?></th>
+                <th><?= sortable_html('stock', 'Kho hàng', $sort) ?></th>
                 <th>Nhóm</th>
             </tr>
             </thead>
