@@ -1,8 +1,37 @@
 <?php
 
+/**
+ * @param $field
+ * @param $label
+ * @return string
+ */
+function sortable_html($field, $label)
+{
+    global $sort;
+    $link = url('/admin/products/?');
+    $class = [];
+
+    $link .= 'sort=' . $field . ',';
+    if (!is_null($sort)) {
+        [$sortBy, $sortOrder] = $sort;
+
+        if ($sort[0] === $field) {
+            $class[] = 'sort-' . $sortOrder;
+            if ($sortOrder === 'asc') $link .= 'desc';
+            else $link .= 'asc';
+        } else
+            $link .= 'asc';
+    } else $link .= 'asc';
+    ob_start(); ?>
+    <a href="<?= $link ?>" class="<?= implode(' ', $class) ?>"><?= $label ?></a>
+    <?php
+
+    return ob_get_clean();
+}
+
 include "layout/admin-header.phtml" ?>
     <style>
-        .table-responsive td .media img{
+        .table-responsive td .media img {
             width: 60px;
         }
     </style>
@@ -21,9 +50,9 @@ include "layout/admin-header.phtml" ?>
             <thead>
             <tr>
                 <th>#</th>
-                <th>Tên sản phẩm</th>
-                <th>Giá sản phẩm</th>
-                <th>Kho hàng</th>
+                <th><?= sortable_html('name', 'Tên sản phẩm') ?></th>
+                <th><?= sortable_html('price', 'Giá sản phẩm') ?></th>
+                <th><?= sortable_html('stock', 'Kho hàng') ?></th>
                 <th>Nhóm</th>
             </tr>
             </thead>
@@ -50,7 +79,7 @@ include "layout/admin-header.phtml" ?>
                     </td>
                     <td>
                         <?php if ($product->stock > 0) { ?>
-                            Còn <strong class="text-success"><?=$product->stock?></strong> sản phẩm
+                            Còn <strong class="text-success"><?= $product->stock ?></strong> sản phẩm
                         <?php } else { ?>
                             <span class="text-muted">Hết hàng</span>
                         <?php } ?>

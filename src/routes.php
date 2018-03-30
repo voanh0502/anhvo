@@ -8,7 +8,8 @@ use Slim\Http\Response;
 $app->group('/admin', function () {
     $this->post('/upload', \Controllers\AdminProducts::class . ':upload');
 
-    $this->get('/products', \Controllers\AdminProducts::class . ':index');
+    $this->get('/products', \Controllers\AdminProducts::class . ':index')
+        ->add(new \Controllers\Middlewares\ProductFilterMiddleware());
     $this->get('/products/{id}', \Controllers\AdminProducts::class . ':edit');
     $this->post('/products[/{id}]', \Controllers\AdminProducts::class . ':save');
 });

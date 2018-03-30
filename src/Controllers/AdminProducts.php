@@ -18,10 +18,13 @@ class AdminProducts extends Base
 {
     public function index(Request $request, Response $response)
     {
-        $this->view->render($response, 'admin/product-list.phtml', [
-            'products' => Product::all(),
-            'messages' => $this->flash->getMessage('product')
-        ]);
+        $data = [
+            'products' => $request->getAttribute('products'),
+            'messages' => $this->flash->getMessage('product'),
+            'sort' => $request->getAttribute('sort', null)
+        ];
+
+        $this->view->render($response, 'admin/product-list.phtml', $data);
     }
 
     public function edit(Request $request, Response $response, $args)
