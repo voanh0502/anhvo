@@ -1,6 +1,9 @@
 $font-size-base: 0.85rem;
+$icon_font-path: '../fonts/';
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
+
+@import "../../node_modules/open-iconic/font/css/open-iconic-bootstrap.scss";
 
 @import "scss/reset";
 
@@ -61,6 +64,24 @@ $font-size-base: 0.85rem;
       .btn {
         margin-left: 1rem;
       }
+    }
+  }
+}
+
+.admin .page-product-list {
+  .sort- {
+    &indicator-arrow {
+      display: none;
+      transform-origin: center center;
+      color: $gray-700;
+      margin-left: .2rem;
+      font-size: .85em;
+    }
+    &indicator .sort-indicator-arrow {
+      display: inline-block;
+    }
+    &indicator.sort-desc .sort-indicator-arrow {
+      transform: rotate(180deg);
     }
   }
 }

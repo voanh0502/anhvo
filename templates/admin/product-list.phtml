@@ -6,10 +6,12 @@ function sortable_html($field, $label, $sort)
     $class = [];
 
     $link .= 'sort=' . $field . ',';
+
     if (!is_null($sort)) {
         [$sortBy, $sortOrder] = $sort;
 
         if ($sort[0] === $field) {
+            $class[] = 'sort-indicator';
             $class[] = 'sort-' . $sortOrder;
             if ($sortOrder === 'asc') $link .= 'desc';
             else $link .= 'asc';
@@ -17,7 +19,10 @@ function sortable_html($field, $label, $sort)
             $link .= 'asc';
     } else $link .= 'asc';
     ob_start(); ?>
-    <a href="<?= $link ?>" class="<?= implode(' ', $class) ?>"><?= $label ?></a>
+    <a href="<?= $link ?>" class="<?= implode(' ', $class) ?>">
+        <?= $label ?>
+        <span class="sort-indicator-arrow oi oi-caret-top"></span>
+    </a>
     <?php
 
     return ob_get_clean();
@@ -29,59 +34,61 @@ include "layout/admin-header.phtml" ?>
             width: 60px;
         }
     </style>
-    <div class="clearfix admin-header">
-        <h1>Danh sách sản phẩm
-            <span class="badge badge-secondary"><?= $site['productCount'] ?></span>
-            <a href="/admin/products/add" class="btn btn-primary" role="button">Thêm sản phẩm</a>
-        </h1>
-    </div>
-<?php ?>
-<?php if ($messages) foreach ($messages as $message) { ?>
-    <div class="alert alert-success" role="alert"><?= $message ?></div>
-<?php } ?>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th><?= sortable_html('name', 'Tên sản phẩm', $sort) ?></th>
-                <th><?= sortable_html('price', 'Giá sản phẩm', $sort) ?></th>
-                <th><?= sortable_html('stock', 'Kho hàng', $sort) ?></th>
-                <th>Nhóm</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($products as $product) { ?>
+    <div class="page-product-list">
+        <div class="clearfix admin-header">
+            <h1>Danh sách sản phẩm
+                <span class="badge badge-secondary"><?= $site['productCount'] ?></span>
+                <a href="<?= url('/admin/products/add') ?>" class="btn btn-primary" role="button">Thêm sản phẩm</a>
+            </h1>
+        </div>
+        <?php ?>
+        <?php if ($messages) foreach ($messages as $message) { ?>
+            <div class="alert alert-success" role="alert"><?= $message ?></div>
+        <?php } ?>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
                 <tr>
-                    <th scope="row"><?= $product->id ?></th>
-                    <td>
-                        <div class="media">
-                            <img src="<?= $product->image ?>" alt="" class="border mr-3">
-                            <div class="media-body">
-                                <strong><a href="/admin/products/<?= $product->id ?>"><?= $product->name ?></a></strong>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <?php if ($product->saleprice !== null) { ?>
-                            <del class="text-muted"><?= $product->price ?> VND</del>
-                            <br>
-                            <u><?= $product->saleprice ?> VND</u>
-                        <?php } else { ?>
-                            <?= $product->price ?> VND
-                        <?php } ?>
-                    </td>
-                    <td>
-                        <?php if ($product->stock > 0) { ?>
-                            Còn <strong class="text-success"><?= $product->stock ?></strong> sản phẩm
-                        <?php } else { ?>
-                            <span class="text-muted">Hết hàng</span>
-                        <?php } ?>
-                    </td>
-                    <td><?= $product->category->name ?></td>
+                    <th><?= sortable_html('id', '#', $sort) ?></th>
+                    <th><?= sortable_html('name', 'Tên sản phẩm', $sort) ?></th>
+                    <th><?= sortable_html('price', 'Giá sản phẩm', $sort) ?></th>
+                    <th><?= sortable_html('stock', 'Kho hàng', $sort) ?></th>
+                    <th>Nhóm</th>
                 </tr>
-            <?php } ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php foreach ($products as $product) { ?>
+                    <tr>
+                        <th scope="row"><?= $product->id ?></th>
+                        <td>
+                            <div class="media">
+                                <img src="<?= $product->image ?>" alt="" class="border mr-3">
+                                <div class="media-body">
+                                    <strong><a href="<?= url('/admin/products/' . $product->id) ?>"><?= $product->name ?></a></strong>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <?php if ($product->saleprice !== null) { ?>
+                                <del class="text-muted"><?= $product->price ?> VND</del>
+                                <br>
+                                <u><?= $product->saleprice ?> VND</u>
+                            <?php } else { ?>
+                                <?= $product->price ?> VND
+                            <?php } ?>
+                        </td>
+                        <td>
+                            <?php if ($product->stock > 0) { ?>
+                                Còn <strong class="text-success"><?= $product->stock ?></strong> sản phẩm
+                            <?php } else { ?>
+                                <span class="text-muted">Hết hàng</span>
+                            <?php } ?>
+                        </td>
+                        <td><?= $product->category->name ?></td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 <?php include "layout/admin-footer.phtml";
