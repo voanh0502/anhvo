@@ -19,9 +19,10 @@ function url($url = '')
  * @param string $name
  * @param array $params
  * @param array $query
+ * @param bool $withBaseUrl
  * @return string
  */
-function route(string $name, $params = [], $query = [])
+function route(string $name, $params = [], $query = [], $withBaseUrl = true)
 {
     global $app;
     $url = $app->getContainer()->get('router')->pathFor($name, $params);
@@ -29,5 +30,5 @@ function route(string $name, $params = [], $query = [])
         $url .= '?' . http_build_query($query);
     }
 
-    return url($url);
+    return $withBaseUrl ? url($url) : $url;
 }

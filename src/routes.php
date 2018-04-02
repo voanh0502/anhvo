@@ -39,7 +39,8 @@ $app->get('/product/{id}', function (Request $request, Response $response, array
 
     return $this->renderer->render($response, 'product-detail.phtml', [
         'body_classes' => ['page-product-detail'],
-        'product' => $product
+        'product' => $product,
+        'messages' => $this->flash->getMessage('cart')
     ]);
 })
     ->setName('product.detail');
@@ -47,7 +48,8 @@ $app->get('/product/{id}', function (Request $request, Response $response, array
 // CART
 $app->group('/cart', function () {
     $this->post('/add', \Controllers\Cart::class . ':add')
-        ->setName('cart.add');
+        ->setName('cart.add')
+        ->add(new \Controllers\Middlewares\CartMiddleware());
 });
 
 // INDEX
