@@ -14,3 +14,9 @@ function url($url = '')
 {
     return 'http://localhost:8081' . $url;
 }
+
+function route(string $name, array $params = [])
+{
+    global $app;
+    return url($app->getContainer()->get('router')->pathFor($name, $params));
+}

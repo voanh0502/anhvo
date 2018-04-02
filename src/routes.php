@@ -6,12 +6,21 @@ use Slim\Http\Response;
 // Routes
 
 $app->group('/admin', function () {
-    $this->post('/upload', \Controllers\AdminProducts::class . ':upload');
+    $this->post('/upload', \Controllers\AdminProducts::class . ':upload')
+        ->setName('admin.upload');
 
     $this->get('/products', \Controllers\AdminProducts::class . ':index')
-        ->add(new \Controllers\Middlewares\ProductFilterMiddleware());
-    $this->get('/products/{id}', \Controllers\AdminProducts::class . ':edit');
-    $this->post('/products[/{id}]', \Controllers\AdminProducts::class . ':save');
+        ->add(new \Controllers\Middlewares\ProductFilterMiddleware())
+        ->setName('admin.product.index');
+
+    $this->get('/products/add', \Controllers\AdminProducts::class . ':edit')
+        ->setName('admin.product.add');
+
+    $this->get('/products/{id}', \Controllers\AdminProducts::class . ':edit')
+        ->setName('admin.product.edit');
+
+    $this->post('/products[/{id}]', \Controllers\AdminProducts::class . ':save')
+        ->setName('admin.product.save');
 });
 
 $app->get('/product/{id}', function (Request $request, Response $response, array $args) {

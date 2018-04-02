@@ -38,7 +38,7 @@ include "layout/admin-header.phtml" ?>
         <div class="clearfix admin-header">
             <h1>Danh sách sản phẩm
                 <span class="badge badge-secondary"><?= $site['productCount'] ?></span>
-                <a href="<?= url('/admin/products/add') ?>" class="btn btn-primary" role="button">Thêm sản phẩm</a>
+                <a href="<?= route('admin.product.add') ?>" class="btn btn-primary" role="button">Thêm sản phẩm</a>
             </h1>
         </div>
         <?php ?>
@@ -52,6 +52,7 @@ include "layout/admin-header.phtml" ?>
                     <th><?= sortable_html('id', '#', $sort) ?></th>
                     <th><?= sortable_html('name', 'Tên sản phẩm', $sort) ?></th>
                     <th><?= sortable_html('price', 'Giá sản phẩm', $sort) ?></th>
+                    <th>Khuyến mãi</th>
                     <th><?= sortable_html('stock', 'Kho hàng', $sort) ?></th>
                     <th>Nhóm</th>
                 </tr>
@@ -64,7 +65,7 @@ include "layout/admin-header.phtml" ?>
                             <div class="media">
                                 <img src="<?= $product->image ?>" alt="" class="border mr-3">
                                 <div class="media-body">
-                                    <strong><a href="<?= url('/admin/products/' . $product->id) ?>"><?= $product->name ?></a></strong>
+                                    <strong><a href="<?= route('admin.product.edit', ['id' => $product->id]) ?>"><?= $product->name ?></a></strong>
                                 </div>
                             </div>
                         </td>
@@ -77,6 +78,15 @@ include "layout/admin-header.phtml" ?>
                                 <?= $product->price ?> VND
                             <?php } ?>
                         </td>
+                        <!--Khuyến mãi-->
+                        <td>
+                            <?php if ($product->sale_percentage < 0.001) { ?>
+                                <p class="text-muted">Không</p>
+                            <?php } else { ?>
+                                <strong class="text-success"><?= round($product->sale_percentage * 100) ?>%</strong>
+                            <?php } ?>
+                        </td>
+                        <!--Stock-->
                         <td>
                             <?php if ($product->stock > 0) { ?>
                                 Còn <strong class="text-success"><?= $product->stock ?></strong> sản phẩm
@@ -84,7 +94,10 @@ include "layout/admin-header.phtml" ?>
                                 <span class="text-muted">Hết hàng</span>
                             <?php } ?>
                         </td>
-                        <td><?= $product->category->name ?></td>
+                        <!--Category-->
+                        <td>
+                            <a href="<?= url('/admin/products?cat=' . $product->category_id) ?>"><?= $product->category->name ?></a>
+                        </td>
                     </tr>
                 <?php } ?>
                 </tbody>

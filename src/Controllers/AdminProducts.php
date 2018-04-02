@@ -21,7 +21,8 @@ class AdminProducts extends Base
         $data = [
             'products' => $request->getAttribute('products'),
             'messages' => $this->flash->getMessage('product'),
-            'sort' => $request->getAttribute('sort', null)
+            'sort' => $request->getAttribute('sort', null),
+            'cat' => $request->getAttribute('catFilter', null)
         ];
 
         $this->view->render($response, 'admin/product-list.phtml', $data);
@@ -30,15 +31,17 @@ class AdminProducts extends Base
     public function edit(Request $request, Response $response, $args)
     {
         $id = $args['id'];
-        if ($id === 'add') {
+        $mode = 'add';
+        if ($id === 'add' || empty($id)) {
             $product = new Product();
         } else {
+            $mode = 'edit';
             $product = Product::find($id);
         }
         $this->view->render($response, 'admin/product-add.phtml', [
             'product' => $product,
             'categories' => Category::all(),
-            'mode' => $id === 'add' ? 'add' : 'edit'
+            'mode' => $mode
         ]);
     }
 
