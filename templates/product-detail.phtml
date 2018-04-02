@@ -1,5 +1,18 @@
 <?php include 'layout/header.phtml' ?>
 <div class="container mt-5">
-
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="<?= route('index') ?>">Trang chủ</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="<?= route('product.list', [], ['cat' => $product->category->id]) ?>"><?= $product->category->name ?></a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                <?= $product->name ?>
+            </li>
+        </ol>
+    </nav>
+    <h1><?= $product->name ?></h1>
 </div>
 <?php include 'layout/footer.phtml' ?>

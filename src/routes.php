@@ -23,13 +23,24 @@ $app->group('/admin', function () {
         ->setName('admin.product.save');
 });
 
+$app->get('/products', function (Request $request, Response $response) {
+    return $this->renderer->render($response, 'product-list.html', [
+        'body_classes' => ['page-product-list'],
+        'products' => $request->getAttribute('products')
+    ]);
+})
+    ->add(new \Controllers\Middlewares\ProductFilterMiddleware())
+    ->setName('product.list');
+
 $app->get('/product/{id}', function (Request $request, Response $response, array $args) {
     $product = \Models\Product::find($args['id']);
 
     return $this->renderer->render($response, 'product-detail.phtml', [
+        'body_classes' => ['page-product-detail'],
         'product' => $product
     ]);
-});
+})
+    ->setName('product.detail');
 
 $app->get('/', function (Request $request, Response $response, array $args) {
     // Render index view
@@ -38,4 +49,4 @@ $app->get('/', function (Request $request, Response $response, array $args) {
         'categories' => \Models\Category::all(),
         'products' => \Models\Product::take(15)->get()
     ]));
-});
+})->setName('index');

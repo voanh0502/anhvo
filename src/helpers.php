@@ -15,8 +15,19 @@ function url($url = '')
     return 'http://localhost:8081' . $url;
 }
 
-function route(string $name, array $params = [])
+/**
+ * @param string $name
+ * @param array $params
+ * @param array $query
+ * @return string
+ */
+function route(string $name, $params = [], $query = [])
 {
     global $app;
-    return url($app->getContainer()->get('router')->pathFor($name, $params));
+    $url = $app->getContainer()->get('router')->pathFor($name, $params);
+    if (count($query) > 0) {
+        $url .= '?' . http_build_query($query);
+    }
+
+    return url($url);
 }
