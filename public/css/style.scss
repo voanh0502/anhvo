@@ -63,6 +63,14 @@ $icon_font-path: '../fonts/';
   }
 }
 
+.frontend.page-cart {
+  .cart-item {
+    img {
+      width: 60px;
+    }
+  }
+}
+
 .admin {
   &-header {
     h1 {

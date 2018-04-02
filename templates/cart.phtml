@@ -1,0 +1,53 @@
+<?php include 'layout/header.phtml' ?>
+
+    <div class="container mt-5">
+        <h2>Giỏ hàng</h2>
+        <?php if ($count === 0) { ?>
+            <div class="text-center pt-5">
+                <p class="text-muted">Giỏ hàng rỗng :)</p>
+            </div>
+        <?php } else { ?>
+            <div class="table-responsive pt-5">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <td colspan="2"><h5>Tổng số tiền</h5></td>
+                        <td>
+                            <h5 class="text-success"><?= $totalAmount ?> VND</h5>
+                        </td>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    <?php foreach ($items as $item) { ?>
+                        <tr class="cart-item">
+                            <td>
+                                <div class="media">
+                                    <img src="<?= $item['product']->image ?>" alt="" class="border mr-3">
+                                    <div class="media-body">
+                                        <strong><?= $item['product']->name ?></strong>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <?= $item['quantity'] ?>
+                            </td>
+                            <td>
+                                <?= $item['amount'] ?> VND
+                            </td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+
+                </table>
+            </div>
+        <?php } ?>
+    </div>
+
+<?php include 'layout/footer.phtml' ?>

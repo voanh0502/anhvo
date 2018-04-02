@@ -15,15 +15,42 @@ use Slim\Http\Response;
 
 class Cart extends Base
 {
+    public function preview(Request $request, Response $response)
+    {
+        //transform cart items for preview
+        $cartItems = $this->session->get('cart');
+        $totalAmount = 0;
+        foreach ($cartItems as $id => $cartItem) {
+            $product = Product::find($cartItem['product_id']);
+
+            $price = $product->saleprice ? $product->saleprice : $product->price;
+            $price *= (int)$cartItem['quantity'];
+
+            $cartItems[$id]['product'] = $product;
+            $cartItems[$id]['amount'] = $price;
+            $totalAmount += $price;
+        }
+
+        return $this->view->render($response, 'cart.phtml', [
+            'body_classes' => ['page-cart'],
+            'items' => $cartItems,
+            'count' => count($cartItems),
+            'totalAmount' => $totalAmount
+        ]);
+    }
+
     public function add(Request $request, Response $response)
     {
         $body = $request->getParsedBody();
 
         $product = Product::find($body['product_id']);
 
-        $this->session->merge('cart', [$body]);
+        $entry = [];
+        $entry[$product->id] = $body;
 
-        $this->flash->addMessage('cart', "Sản phẩm <b>{$product->name}</b> đã được thêm vào giỏ hàng. <a>Xem giỏ hàng</a>");
+        $this->session->merge('cart', $entry);
+
+        $this->flash->addMessage('cart', "Sản phẩm <b>{$product->name}</b> đã được thêm vào giỏ hàng. <strong><a href='" . route('cart.preview') . "'>Xem giỏ hàng</a></strong>");
 
         return $response->withRedirect(
             route('product.detail', ['id' => $product->id], [], false),

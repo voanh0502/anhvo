@@ -46,7 +46,18 @@ $app->get('/product/{id}', function (Request $request, Response $response, array
     ->setName('product.detail');
 
 // CART
-$app->group('/cart', function () {
+$app->group('/cart', function () use ($app) {
+    $this->get('/preview', \Controllers\Cart::class . ':preview')
+        ->setName('cart.preview')
+        ->add(new \Controllers\Middlewares\CartMiddleware());
+
+//    $this->get('/empty', function (Request $request, Response $response) use ($app) {
+//        $session = $app->getContainer()->get('session');
+//        $session::destroy();
+//
+//        return $response->withJson(['status' => 'OK']);
+//    });
+
     $this->post('/add', \Controllers\Cart::class . ':add')
         ->setName('cart.add')
         ->add(new \Controllers\Middlewares\CartMiddleware());
