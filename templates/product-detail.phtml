@@ -13,6 +13,37 @@
             </li>
         </ol>
     </nav>
-    <h1><?= $product->name ?></h1>
+    <section class="product-summary mt-5">
+        <div class="row">
+            <div class="col-sm-5">
+                <img src="<?= url($product->image) ?>" alt="" class="img-fluid">
+            </div>
+            <div class="col-sm-7">
+                <h2>
+                    <?= $product->name ?>
+                    <?php if ($product->is_sale) { ?>
+                        <span class="badge badge-success ml-2">SALE OFF <?= round($product->sale_percentage * 100) ?>
+                            %</span>
+                    <?php } ?>
+                </h2>
+                <div class="price <?= $product->is_sale ? 'price-has-sale' : '' ?>">
+                    <?php if ($product->is_sale) { ?>
+                        <span>
+                            <del class="text-muted"><?= $product->price ?> VND</del>
+                        </span>
+                        <span class="ml-2"><?= $product->saleprice ?> VND</span>
+                    <?php } else { ?>
+                        <?= $product->price ?> VND
+                    <?php } ?>
+                </div>
+                <hr>
+                <p class="text-justify"><?= $product->features ?></p>
+                <div class="btn btn-lg btn-success">
+                    <span class="oi oi-cart"></span>
+                    Thêm vào giỏ hàng
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 <?php include 'layout/footer.phtml' ?>

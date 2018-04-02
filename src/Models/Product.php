@@ -26,4 +26,9 @@ class Product extends Model
         if ($this->saleprice === null) return 0;
         return (($this->price - $this->saleprice) * 1.0) / $this->price;
     }
+
+    public function getIsSaleAttribute()
+    {
+        return $this->sale_percentage > 0.001;
+    }
 }
