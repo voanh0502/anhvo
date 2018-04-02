@@ -14,6 +14,7 @@
                         <th>Sản phẩm</th>
                         <th>Số lượng</th>
                         <th>Thành tiền</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -22,10 +23,11 @@
                         <td>
                             <h5 class="text-success"><?= $totalAmount ?> VND</h5>
                         </td>
+                        <td></td>
                     </tr>
                     </tfoot>
                     <tbody>
-                    <?php foreach ($items as $item) { ?>
+                    <?php foreach ($items as $id => $item) { ?>
                         <tr class="cart-item">
                             <td>
                                 <div class="media">
@@ -40,6 +42,14 @@
                             </td>
                             <td>
                                 <?= $item['amount'] ?> VND
+                            </td>
+                            <td>
+                                <form action="<?= route('cart.remove', ['id' => $id]) ?>" method="post">
+                                    <input type="hidden" name="_METHOD" value="DELETE"/>
+                                    <button type="submit" class="btn btn-danger">
+                                        Xóa
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     <?php } ?>

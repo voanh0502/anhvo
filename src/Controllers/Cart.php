@@ -57,4 +57,15 @@ class Cart extends Base
             302
         );
     }
+
+    public function remove(Request $request, Response $response, $args = [])
+    {
+        $cartItems = $this->session->get('cart');
+        $idToRemove = $args['id'];
+        unset($cartItems[$idToRemove]);
+
+        $this->session->set('cart', $cartItems);
+
+        return $response->withRedirect(route('cart.preview', [], [], false), 302);
+    }
 }

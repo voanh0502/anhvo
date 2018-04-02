@@ -48,8 +48,7 @@ $app->get('/product/{id}', function (Request $request, Response $response, array
 // CART
 $app->group('/cart', function () use ($app) {
     $this->get('/preview', \Controllers\Cart::class . ':preview')
-        ->setName('cart.preview')
-        ->add(new \Controllers\Middlewares\CartMiddleware());
+        ->setName('cart.preview');
 
 //    $this->get('/empty', function (Request $request, Response $response) use ($app) {
 //        $session = $app->getContainer()->get('session');
@@ -59,9 +58,11 @@ $app->group('/cart', function () use ($app) {
 //    });
 
     $this->post('/add', \Controllers\Cart::class . ':add')
-        ->setName('cart.add')
-        ->add(new \Controllers\Middlewares\CartMiddleware());
-});
+        ->setName('cart.add');
+
+    $this->delete('/{id}', \Controllers\Cart::class . ':remove')
+        ->setName('cart.remove');
+})->add(new \Controllers\Middlewares\CartMiddleware());
 
 // INDEX
 $app->get('/', function (Request $request, Response $response, array $args) {
