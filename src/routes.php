@@ -23,6 +23,7 @@ $app->group('/admin', function () {
         ->setName('admin.product.save');
 });
 
+// PRODUCT LIST
 $app->get('/products', function (Request $request, Response $response) {
     return $this->renderer->render($response, 'product-list.html', [
         'body_classes' => ['page-product-list'],
@@ -32,6 +33,7 @@ $app->get('/products', function (Request $request, Response $response) {
     ->add(new \Controllers\Middlewares\ProductFilterMiddleware())
     ->setName('product.list');
 
+// PRODUCT DETAIL
 $app->get('/product/{id}', function (Request $request, Response $response, array $args) {
     $product = \Models\Product::find($args['id']);
 
@@ -42,6 +44,13 @@ $app->get('/product/{id}', function (Request $request, Response $response, array
 })
     ->setName('product.detail');
 
+// CART
+$app->group('/cart', function () {
+    $this->post('/add', \Controllers\Cart::class . ':add')
+        ->setName('cart.add');
+});
+
+// INDEX
 $app->get('/', function (Request $request, Response $response, array $args) {
     // Render index view
     return $this->renderer->render($response, 'index.phtml', array_merge($args, [

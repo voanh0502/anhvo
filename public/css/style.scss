@@ -57,6 +57,12 @@ $icon_font-path: '../fonts/';
   }
 }
 
+.frontend.page-product-detail {
+  .price {
+    font-size: 1.3rem;
+  }
+}
+
 .admin {
   &-header {
     h1 {

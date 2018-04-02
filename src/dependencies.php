@@ -3,7 +3,15 @@
 
 $container = $app->getContainer();
 
-// view renderer
+$app->add(new \Slim\Middleware\Session([
+    'name' => 'web_ban_hang',
+    'autorefresh' => true,
+    'lifetime' => '1 week'
+]));
+
+$container['session'] = function ($c) {
+    return new \SlimSession\Helper;
+};
 
 // monolog
 $container['logger'] = function ($c) {

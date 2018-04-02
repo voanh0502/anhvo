@@ -38,10 +38,17 @@
                 </div>
                 <hr>
                 <p class="text-justify"><?= $product->features ?></p>
-                <div class="btn btn-lg btn-success">
-                    <span class="oi oi-cart"></span>
-                    Thêm vào giỏ hàng
-                </div>
+                <form action="<?= route('cart.add') ?>" method="POST">
+                    <input type="hidden" name="product_id" value="<?= $product->id ?>">
+                    <div>
+                        <small class="form-text text-muted mb-2">Số lượng</small>
+                        <input type="text" class="form-control form-control-lg d-inline w-25" value="1" name="quantity">
+                        <button type="submit" class="btn btn-lg btn-success d-inline ml-2" style="margin-top: -3px">
+                            <span class="oi oi-cart"></span>
+                            Thêm vào giỏ hàng
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
