@@ -62,7 +62,9 @@ class Cart extends Base
     {
         $cartItems = $this->session->get('cart');
         $idToRemove = $args['id'];
-        unset($cartItems[$idToRemove]);
+        if ($idToRemove)
+            unset($cartItems[$idToRemove]);
+        else $cartItems = [];
 
         $this->session->set('cart', $cartItems);
 

@@ -3,8 +3,11 @@
     <div class="container mt-5">
         <h2>Giỏ hàng</h2>
         <?php if ($count === 0) { ?>
-            <div class="text-center pt-5">
+            <div class="text-center pt-5 mb-5">
                 <p class="text-muted">Giỏ hàng rỗng :)</p>
+                <p>
+                    <a href="<?= route('index') ?>" class="btn btn-secondary">Quay lại trang chủ</a>
+                </p>
             </div>
         <?php } else { ?>
             <div class="table-responsive pt-5">
@@ -54,8 +57,16 @@
                         </tr>
                     <?php } ?>
                     </tbody>
-
                 </table>
+
+                <div class="mt-2 mb-5 d-flex justify-content-end">
+                    <a href="<?= route('index') ?>" class="btn btn-secondary">Quay lại trang chủ</a>
+                    <form action="<?= route('cart.remove') ?>" method="post">
+                        <input type="hidden" name="_METHOD" value="DELETE"/>
+                        <button type="submit" class="ml-2 btn btn-danger">Làm trống giỏ hàng</button>
+                    </form>
+                    <div class="ml-2 btn btn-success">Thanh toán</div>
+                </div>
             </div>
         <?php } ?>
     </div>

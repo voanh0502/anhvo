@@ -60,8 +60,9 @@ $app->group('/cart', function () use ($app) {
     $this->post('/add', \Controllers\Cart::class . ':add')
         ->setName('cart.add');
 
-    $this->delete('/{id}', \Controllers\Cart::class . ':remove')
+    $this->delete('/[{id}]', \Controllers\Cart::class . ':remove')
         ->setName('cart.remove');
+
 })->add(new \Controllers\Middlewares\CartMiddleware());
 
 // INDEX
