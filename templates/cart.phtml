@@ -65,7 +65,9 @@
                         <input type="hidden" name="_METHOD" value="DELETE"/>
                         <button type="submit" class="ml-2 btn btn-danger">Làm trống giỏ hàng</button>
                     </form>
-                    <div class="ml-2 btn btn-success">Thanh toán</div>
+                    <form action="<?= route('cart.checkout') ?>" method="POST">
+                        <button type="submit" class="ml-2 btn btn-success">Thanh toán</button>
+                    </form>
                 </div>
             </div>
         <?php } ?>

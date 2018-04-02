@@ -70,4 +70,9 @@ class Cart extends Base
 
         return $response->withRedirect(route('cart.preview', [], [], false), 302);
     }
+
+    public function checkout(Request $request, Response $response)
+    {
+
+    }
 }

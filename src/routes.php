@@ -50,12 +50,8 @@ $app->group('/cart', function () use ($app) {
     $this->get('/preview', \Controllers\Cart::class . ':preview')
         ->setName('cart.preview');
 
-//    $this->get('/empty', function (Request $request, Response $response) use ($app) {
-//        $session = $app->getContainer()->get('session');
-//        $session::destroy();
-//
-//        return $response->withJson(['status' => 'OK']);
-//    });
+    $this->post('/checkout', \Controllers\Cart::class . ':checkout')
+        ->setName('cart.checkout');
 
     $this->post('/add', \Controllers\Cart::class . ':add')
         ->setName('cart.add');
