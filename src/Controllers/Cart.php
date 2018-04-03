@@ -18,18 +18,8 @@ class Cart extends Base
     public function preview(Request $request, Response $response)
     {
         //transform cart items for preview
-        $cartItems = $this->session->get('cart');
         $totalAmount = 0;
-        foreach ($cartItems as $id => $cartItem) {
-            $product = Product::find($cartItem['product_id']);
-
-            $price = $product->saleprice ? $product->saleprice : $product->price;
-            $price *= (int)$cartItem['quantity'];
-
-            $cartItems[$id]['product'] = $product;
-            $cartItems[$id]['amount'] = $price;
-            $totalAmount += $price;
-        }
+        $cartItems = $this->makeCartItems($totalAmount);
 
         return $this->view->render($response, 'cart.phtml', [
             'body_classes' => ['page-cart'],
@@ -73,6 +63,33 @@ class Cart extends Base
 
     public function checkout(Request $request, Response $response)
     {
-        return $this->view->render($response, 'checkout.phtml');
+        $totalAmount = 0;
+        $cartItems = $this->makeCartItems($totalAmount);
+
+        return $this->view->render($response, 'checkout.phtml', [
+            'body_classes' => ['page-checkout']
+        ]);
+    }
+
+    /**
+     * @param int $totalAmount
+     * @return mixed
+     */
+    private function makeCartItems(&$totalAmount = 0)
+    {
+        $cartItems = $this->session->get('cart');
+        $totalAmount = 0;
+        foreach ($cartItems as $id => $cartItem) {
+            $product = Product::find($cartItem['product_id']);
+
+            $price = $product->saleprice ? $product->saleprice : $product->price;
+            $price *= (int)$cartItem['quantity'];
+
+            $cartItems[$id]['product'] = $product;
+            $cartItems[$id]['amount'] = $price;
+            $totalAmount += $price;
+        }
+
+        return $cartItems;
     }
 }

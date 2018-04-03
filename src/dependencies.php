@@ -46,3 +46,5 @@ $container['renderer'] = function ($c) {
         ]
     ]));
 };
+
+$scriptQueue = [];

@@ -10,67 +10,82 @@
                 </p>
             </div>
         <?php } else { ?>
-            <div class="table-responsive pt-5">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Sản phẩm</th>
-                        <th>Số lượng</th>
-                        <th>Thành tiền</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tfoot>
-                    <tr>
-                        <td colspan="2"><h5>Tổng số tiền</h5></td>
-                        <td>
-                            <h5 class="text-success"><?= $totalAmount ?> VND</h5>
-                        </td>
-                        <td></td>
-                    </tr>
-                    </tfoot>
-                    <tbody>
-                    <?php foreach ($items as $id => $item) { ?>
-                        <tr class="cart-item">
-                            <td>
-                                <div class="media">
-                                    <img src="<?= $item['product']->image ?>" alt="" class="border mr-3">
-                                    <div class="media-body">
-                                        <strong><?= $item['product']->name ?></strong>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <?= $item['quantity'] ?>
-                            </td>
-                            <td>
-                                <?= $item['amount'] ?> VND
-                            </td>
-                            <td>
-                                <form action="<?= route('cart.remove', ['id' => $id]) ?>" method="post">
-                                    <input type="hidden" name="_METHOD" value="DELETE"/>
-                                    <button type="submit" class="btn btn-danger">
-                                        Xóa
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                    </tbody>
-                </table>
-
-                <div class="mt-2 mb-5 d-flex justify-content-end">
-                    <a href="<?= route('index') ?>" class="btn btn-secondary">Quay lại trang chủ</a>
-                    <form action="<?= route('cart.remove') ?>" method="post">
-                        <input type="hidden" name="_METHOD" value="DELETE"/>
-                        <button type="submit" class="ml-2 btn btn-danger">Làm trống giỏ hàng</button>
-                    </form>
+            <div class="row pt-4">
+                <div class="col-sm-5">
                     <form action="<?= route('cart.checkout') ?>" method="POST">
-                        <button type="submit" class="ml-2 btn btn-success">Thanh toán</button>
+                        <h4>Thông tin thanh toán</h4>
+                        <hr>
                     </form>
+                </div>
+                <div class="col-sm-7">
+                    <div class="mb-3">
+                        <h4>Chi tiết giỏ hàng</h4>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <td colspan="2"><h5>Tổng số tiền</h5></td>
+                                <td>
+                                    <h5 class="text-success"><?= $totalAmount ?> VND</h5>
+                                </td>
+                                <td></td>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <?php foreach ($items as $id => $item) { ?>
+                                <tr class="cart-item">
+                                    <td>
+                                        <div class="media">
+                                            <img src="<?= $item['product']->image ?>" alt="" class="border mr-3">
+                                            <div class="media-body">
+                                                <strong><?= $item['product']->name ?></strong>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <?= $item['quantity'] ?>
+                                    </td>
+                                    <td>
+                                        <?= $item['amount'] ?> VND
+                                    </td>
+                                    <td>
+                                        <form action="<?= route('cart.remove', ['id' => $id]) ?>" method="post">
+                                            <input type="hidden" name="_METHOD" value="DELETE"/>
+                                            <button type="submit" class="btn btn-danger">
+                                                Xóa
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+
+                        <div class="mt-2 mb-5 d-flex justify-content-end">
+                            <a href="<?= route('index') ?>" class="btn btn-secondary">Quay lại trang chủ</a>
+                            <form action="<?= route('cart.remove') ?>" method="post">
+                                <input type="hidden" name="_METHOD" value="DELETE"/>
+                                <button type="submit" class="ml-2 btn btn-danger">Làm trống giỏ hàng</button>
+                            </form>
+                            <div class="ml-2 btn btn-success">Thanh toán</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         <?php } ?>
     </div>
+<?php beginScript() ?>
+    <script>
 
+    </script>
+<?php endScript() ?>
 <?php include 'layout/footer.phtml' ?>

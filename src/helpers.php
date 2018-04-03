@@ -17,9 +17,9 @@ function url($url = '')
 
 /**
  * @param string $name
- * @param array $params
- * @param array $query
- * @param bool $withBaseUrl
+ * @param array  $params
+ * @param array  $query
+ * @param bool   $withBaseUrl
  * @return string
  */
 function route(string $name, $params = [], $query = [], $withBaseUrl = true)
@@ -31,4 +31,16 @@ function route(string $name, $params = [], $query = [], $withBaseUrl = true)
     }
 
     return $withBaseUrl ? url($url) : $url;
+}
+
+function beginScript()
+{
+    ob_start();
+}
+
+function endScript()
+{
+    $script = ob_get_clean();
+    global $scriptQueue;
+    $scriptQueue[] = $script;
 }
