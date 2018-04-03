@@ -73,6 +73,6 @@ class Cart extends Base
 
     public function checkout(Request $request, Response $response)
     {
-
+        return $this->view->render($response, 'checkout.phtml');
     }
 }
